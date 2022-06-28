@@ -166,9 +166,10 @@ function newUser() {
         })
         .then((r) => {
             $("#nav-user-table-tab").load("/api/admin");
-        });
-
+        })
 }
+
+
 
 
 async function showDeleteModal(id) {
