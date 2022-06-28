@@ -1,6 +1,8 @@
 package ru.kata.rest.pp_3_1_4.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.rest.pp_3_1_4.dto.UserDTO;
@@ -32,10 +34,19 @@ public class AdminRestController {
     }
 
 
+/*    @GetMapping("/admin")
+    private ResponseEntity<List<User>> allUsers() {
+        List<User> users = userService.getAll();
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }*/
+
     @GetMapping("/admin")
     private List<User> allUsers() {
+
         return userService.getAll();
     }
+
 
 
     @GetMapping("/admin/{id}")
@@ -60,10 +71,10 @@ public class AdminRestController {
 
     @PutMapping("/admin")
     public void updateUser(@RequestBody User user) {
-        User checkUser = userService.loadUserByUsername(user.getUsername());
-        if (checkUser.getId() == user.getId()) {
+/*        User checkUser = userService.loadUserByUsername(user.getUsername());
+        if (checkUser.getId() == user.getId()) {*/
             userService.save(user);
-        }
+        //}
     }
 
     @DeleteMapping("/admin/{id}")

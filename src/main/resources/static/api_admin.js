@@ -28,8 +28,8 @@ function showAllUsers() {
                     '<td>' + '<button type="button" class="btn btn-danger btn-sm" ' +
                     'data-toggle="modal" data-whatever="' + user.id + '" data-target="#deleteModal">Delete</button>' + '</td>';
                 tbody.appendChild(tr);
-            })
-        })
+            });
+        });
 }
 
 function showUser() {
@@ -90,7 +90,7 @@ async function showEditModal(id) {
 }
 
 function editUser() {
-    let editForm = document.getElementById("editForm")
+    let editForm = document.getElementById("editForm");
     let formData = new FormData(editForm);
 
     let user = {
@@ -130,10 +130,18 @@ async function showNewModal() {
         option.appendChild(document.createTextNode(role.name));
         selectNew.appendChild(option);
     })
+    let i = 0;
+    let optionToSelect;
+    for (let i = 0; i < selectNew.options.length; i++) {
+        optionToSelect = selectNew.options[i];
+        if (optionToSelect.text == "ROLE_USER") {
+            optionToSelect.selected = true;
+        }
+    }
 }
 
 function newUser() {
-    let newUserForm = document.getElementById("newUserForm")
+    let newUserForm = document.getElementById("newUserForm");
     let formData = new FormData(newUserForm);
     let user = {
         firstname: formData.get('firstname'),
@@ -154,14 +162,14 @@ function newUser() {
         body: JSON.stringify(user)
     })
         .then((response) => {
-            document.getElementById('newUserForm').onsubmit;
+
         })
         .then((r) => {
-            $('#nav-user-table-tab').tab('show');
-            $('#nav-new-user').removeClass('active');
-        /*    showAllUsers();*/
+            $("#nav-user-table-tab").load("/api/admin");
         });
+
 }
+
 
 async function showDeleteModal(id) {
     let deleteUser = await getUser(id);
@@ -232,7 +240,7 @@ async function getUser(id) {
     return await response.json();
 }
 
-async function getAllUser() {
+async function getAllUsers() {
     let response = await fetch(url);
     return await response.json();
 }
