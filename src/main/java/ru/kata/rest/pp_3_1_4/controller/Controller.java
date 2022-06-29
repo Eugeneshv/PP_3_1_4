@@ -1,7 +1,7 @@
 package ru.kata.rest.pp_3_1_4.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.rest.pp_3_1_4.entity.Role;
@@ -12,13 +12,13 @@ import ru.kata.rest.pp_3_1_4.service.UserService;
 import java.security.Principal;
 import java.util.List;
 
-@Controller
-public class AdminController {
+@org.springframework.stereotype.Controller
+public class Controller {
 
     private final UserService userService;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public Controller(UserService userService) {
         this.userService = userService;
     }
 
@@ -41,12 +41,20 @@ public class AdminController {
 
     }
 
+    @GetMapping("/user")
+    public String index(@AuthenticationPrincipal User userActive, Model model) {
+        model.addAttribute("userActive", userActive);
+        return "user";
+    }
+
+
+/*
 
     @GetMapping("/{id}")
     public String getUserById(@PathVariable("id") long id, Model model) {
         //model.addAttribute("user", userService.getById(id));
         return null;
-    }
+    }*/
 /*
 
 

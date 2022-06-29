@@ -115,7 +115,8 @@ function editUser() {
     })
         .then((response) => {
             document.getElementById('editForm').onsubmit;
-        })
+        });
+    showAllUsers();
 }
 
 async function showNewModal() {
