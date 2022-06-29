@@ -34,18 +34,18 @@ public class AdminRestController {
     }
 
 
-/*    @GetMapping("/admin")
+    @GetMapping("/admin")
     private ResponseEntity<List<User>> allUsers() {
         List<User> users = userService.getAll();
 
         return new ResponseEntity<>(users, HttpStatus.OK);
-    }*/
-
+    }
+/*
     @GetMapping("/admin")
     private List<User> allUsers() {
 
         return userService.getAll();
-    }
+    }*/
 
 
 

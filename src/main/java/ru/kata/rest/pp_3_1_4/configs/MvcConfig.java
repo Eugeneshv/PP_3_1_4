@@ -1,3 +1,4 @@
+/*
 package ru.kata.rest.pp_3_1_4.configs;
 
 import org.springframework.context.annotation.Configuration;
@@ -11,3 +12,4 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/admin").setViewName("admin");
     }
 }
+*/
