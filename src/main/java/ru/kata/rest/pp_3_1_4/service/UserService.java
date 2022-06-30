@@ -6,6 +6,7 @@ import ru.kata.rest.pp_3_1_4.entity.Role;
 import ru.kata.rest.pp_3_1_4.entity.User;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 

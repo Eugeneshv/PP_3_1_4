@@ -12,6 +12,7 @@ import ru.kata.rest.pp_3_1_4.repository.RoleRepository;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -26,11 +27,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.roleRepository = roleRepository;
     }
 
-    @Override
+/*    @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         userDao.getAll().forEach(user -> users.add(user));
         return users;
+    }*/
+
+    @Override
+    public List<User> getAll() {
+        return userDao.getAll();
     }
 
     @Override

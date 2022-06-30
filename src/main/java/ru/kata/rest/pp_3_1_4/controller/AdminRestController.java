@@ -5,11 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
 import ru.kata.rest.pp_3_1_4.dto.UserDTO;
 import ru.kata.rest.pp_3_1_4.entity.Role;
 import ru.kata.rest.pp_3_1_4.entity.User;
 import ru.kata.rest.pp_3_1_4.service.UserService;
 import ru.kata.rest.pp_3_1_4.utils.MapperUser;
+
 
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class AdminRestController {
     @Autowired
     public AdminRestController(UserService userService, MapperUser mapperUser) {
         this.userService = userService;
+
         this.mapperUser = mapperUser;
     }
 
@@ -37,17 +40,12 @@ public class AdminRestController {
     @GetMapping("/admin")
     private ResponseEntity<List<User>> allUsers() {
         List<User> users = userService.getAll();
-
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-/*
-    @GetMapping("/admin")
+/*    @GetMapping("/admin")
     private List<User> allUsers() {
-
         return userService.getAll();
     }*/
-
-
 
     @GetMapping("/admin/{id}")
     public UserDTO getUser (@PathVariable("id") long id) {
@@ -55,17 +53,29 @@ public class AdminRestController {
         return mapperUser.toUserDTO(user);
     }
 
+/*    @GetMapping("/admin/{id}")
+    public ResponseEntity<User> getUser (@PathVariable("id") Long id) {
+        User user = userService.getById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }*/
+
+/*
+    @GetMapping("/admin/{id}")
+    public User getUser (@PathVariable("id") long id) {
+        return userService.getById(id);
+    }
+*/
+
+
 
     @PostMapping("/admin")
-    public void createUser(@RequestBody User user) {
-        if(userService.loadUserByUsername(user.getUsername()) == null) {
+    public ResponseEntity<?> createUser(@RequestBody User user) {
             if (userService.loadUserByUsername(user.getUsername()) == null) {
                 BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
                 userService.save(user);
             }
-            userService.save(user);
-        }
+            return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 
@@ -75,11 +85,14 @@ public class AdminRestController {
         if (checkUser.getId() == user.getId()) {*/
             userService.save(user);
         //}
+
     }
 
     @DeleteMapping("/admin/{id}")
-    public void DeleteModal(@PathVariable("id") long id) {
+    public ResponseEntity<User>DeleteModal(@PathVariable("id") long id) {
+
         userService.removeById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

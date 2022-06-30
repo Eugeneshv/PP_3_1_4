@@ -1,5 +1,7 @@
 package ru.kata.rest.pp_3_1_4.dto;
 
+import ru.kata.rest.pp_3_1_4.entity.Role;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +12,7 @@ public class UserDTO {
     private Integer age;
     private String username;
     private String password;
-    private Set<String> roles = new HashSet<>();
+    private Set<String> roles;
 
     public UserDTO() {}
 

@@ -7,11 +7,11 @@ function showAllUsers() {
         .then((response) => {
             return response.json();
         })
-        .then((allusers) => {
+        .then((allUsers) => {
             let tbody = '';
-            console.log(allusers);
+            console.log(allUsers);
             tbody = document.getElementById('table_allusers');
-            allusers.forEach((user) => {
+            allUsers.forEach((user) => {
                 let roles = "";
                 user.roles.forEach((role) => {
                     roles = roles + role.name.replace("ROLE_", "") + ' '
@@ -31,6 +31,40 @@ function showAllUsers() {
             });
         });
 }
+
+
+/*function showAllUsers() {
+    fetch(url)
+        .then(response => response.json())
+        .then(result => refreshTable(result))
+
+    function refreshTable(users) {
+        let tBody = ''
+        $('#table_allusers').find('tr').remove();
+        $.each(users, function (key, object) {
+            let roles = ''
+            $.each(object.roles, function (k, o) {
+                roles += o.name + ' '
+            })
+            tBody += ('<tr>');
+            tBody += ('<td>' + object.id + '</td>');
+            tBody += ('<td>' + object.firstname + '</td>');
+            tBody += ('<td>' + object.lastname + '</td>');
+            tBody += ('<td>' + object.age + '</td>');
+            tBody += ('<td>' + object.username + '</td>');
+            tBody += ('<td>' + roles.replaceAll('ROLE_', ' ') + '</td>');
+            tBody += ('<td><button type="button" onclick="showEditModal(' + object.id + ')" ' +
+                'class="btn btn-info btn-sm">Edit</button></td>');
+            tBody += ('<td><button type="button" onclick="showDeleteModal(' + object.id + ')" ' +
+                'class="btn btn-danger btn-sm">Delete</button></td>');
+            tBody += ('<tr>');
+        });
+        $('#table_allusers').html(tBody);
+    }
+}*/
+
+
+
 
 function showUser() {
     fetch(urlUser)
@@ -56,13 +90,15 @@ function showUser() {
 }
 
 async function showEditModal(id) {
-    let user = await getUser(id);
+   let user = await getUser(id);
     document.getElementById("editId").value = user.id;
     document.getElementById("editFirstname").value = user.firstname;
     document.getElementById("editLastname").value = user.lastname;
     document.getElementById("editAge").value = user.age;
     document.getElementById("editUsername").value = user.username;
     document.getElementById("editPassword").value = user.password;
+        console.log(user);
+
     $("#editRoles").empty();
     let selectEdit = document.getElementById('editRoles');
     let allRoles = await getAllRoles();
@@ -88,6 +124,7 @@ async function showEditModal(id) {
         });
     }
 }
+
 
 function editUser() {
     let editForm = document.getElementById("editForm");
@@ -116,8 +153,8 @@ function editUser() {
         .then((response) => {
             document.getElementById('editForm').onsubmit;
         });
-    showAllUsers();
 }
+
 
 async function showNewModal() {
     $("#newRoles").empty();
@@ -141,6 +178,8 @@ async function showNewModal() {
     }
 }
 
+
+
 function newUser() {
     let newUserForm = document.getElementById("newUserForm");
     let formData = new FormData(newUserForm);
@@ -155,22 +194,55 @@ function newUser() {
             .map(option => ({name: option.value, id: option.id}))
     }
     fetch(url, {
-        method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
+        method: 'POST',
         body: JSON.stringify(user)
     })
-        .then((response) => {
-
-        })
         .then((r) => {
             $("#nav-user-table-tab").load("/api/admin");
+
         })
 }
 
+/*function newUser() {
+    fetch(url, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
 
+        body: JSON.stringify({
+            firstname: $('#newFirstname').val(),
+            lastname: $('#newLastname').val(),
+            age: $('#newAge').val(),
+            username: $('#newUsername').val(),
+            password: $('#newPassword').val(),
+            roles: [
+                document.getElementById('newRoles').value
+            ]
+        })
+    })
+        .then((r) => {
+            if (r.ok) {
+                $('form input[type="text"], form input[type="password"], form input[type="number"], form textarea')
+                    .val('');
+                $('#nav-user-table-tab').tab('show')
+                showAllUsers()
+            }
+        })
+}*/
+
+/*function refreshTable() {
+    let table = document.querySelector('#table_allusers')
+    while (table.rows.length > 1) {
+        table.deleteRow(1)
+    }
+    setTimeout(showAllUsers(), 50);
+}*/
 
 
 async function showDeleteModal(id) {
@@ -240,6 +312,13 @@ function getAllRoles() {
 async function getUser(id) {
     let response = await fetch(url + '/' + id);
     return await response.json();
+
+  /*  fetch(url + '/' + id)
+        .then(response => response.json())
+        .then(user => alert(user.username + " - " + user.age));
+    alert("getUser JS: id=" + id)*/
+
+
 }
 
 async function getAllUsers() {

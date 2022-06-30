@@ -6,9 +6,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Admin Panel</title>
-<!--
-    <script src="api_admin.js"></script>
--->
+    <!--
+        <script src="api_admin.js"></script>
+    -->
+    <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" th:src="@{js/api_admin.js}" src="../static/js/api_admin.js"></script>
 </head>
 <body style="font-family:Arial, Verdana, sans-serif">
@@ -54,22 +55,26 @@
                         </div>
 
 
-                        <div class="p-4 bg-white">
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Age</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                </tr>
-                                </thead>
-                                <tbody id="table_user">
-                                <!--!!!!!!!-- showUser() in js !!!!!!!!!-->
-                                </tbody>
-                            </table>
+                        <div class="d-grid gap-1">
+                            <div class="p-2 bg-white border rounded-bottom">
+                                </br>
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Age</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="table_user">
+                                    <!--!!!!!!!-- showUser() in js !!!!!!!!!-->
+                                    </tbody>
+                                </table>
+                                </br>
+                            </div>
                         </div>
                     </div>
 
@@ -85,8 +90,7 @@
                                    href="#nav-user-table"
                                    role="tab" aria-controls="nav-user-table" aria-selected="true">User table</a>
                                 <a class="nav-item nav-link" id="nav-new-user-tab" data-toggle="tab"
-                                   href="#nav-new-user" onclick="showNewModal()"
-                                   role="tab"
+                                   href="#nav-new-user" onclick="showNewModal()" role="tab"
                                    aria-controls="nav-new-user" aria-selected="false">New User</a>
                             </div>
                         </nav>
@@ -164,7 +168,8 @@
                                                         </div>
                                                         <div class="form-group was-validated">
                                                             <label for="editPassword">Password</label>
-                                                            <input type="password" class="form-control" id="editPassword"
+                                                            <input type="password" class="form-control"
+                                                                   id="editPassword"
                                                                    name="password" value="password" required/>
                                                         </div>
                                                         <div class="form-group">
@@ -230,12 +235,13 @@
                                             <div class="form-group text-center was-validated">
                                                 <label for="newRoles">Role</label>
                                                 <select multiple class="form-control" required size="2"
-                                                        id="newRoles" name="roles" value="roles"  >
+                                                        id="newRoles" name="roles" value="roles">
                                                 </select>
                                             </div>
                                             <div class="col text-center">
-                                                <button type="submit" data-toggle="tab" href="#nav-user-table"
-                                                        class="btn btn-success btn-center" onclick="newUser()">
+                                                <button type="submit" href="#nav-user-table" data-toggle="tab"
+                                                        class="btn btn-success" onclick="newUser()">
+                                                    <!-- data-toggle="tab"-->
                                                     Add user
                                                 </button>
                                             </div>
