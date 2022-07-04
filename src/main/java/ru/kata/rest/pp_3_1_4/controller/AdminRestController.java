@@ -17,10 +17,10 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin")
 public class AdminRestController {
 
-    private final  UserService userService;
+    private final UserService userService;
     private final MapperUser mapperUser;
 
     @Autowired
@@ -31,65 +31,47 @@ public class AdminRestController {
     }
 
 
-    @GetMapping("/admin/getroles")
+    @GetMapping("/getroles")
     private List<Role> allRoles() {
         return userService.listRoles();
     }
 
 
-    @GetMapping("/admin")
+    @GetMapping()
     private ResponseEntity<List<User>> allUsers() {
-        List<User> users = userService.getAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
-/*    @GetMapping("/admin")
-    private List<User> allUsers() {
-        return userService.getAll();
-    }*/
+        final List<User> users = userService.getAll();
 
-    @GetMapping("/admin/{id}")
-    public UserDTO getUser (@PathVariable("id") long id) {
+        return users != null && !users.isEmpty()
+                ? new ResponseEntity<>(users, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/{id}")
+    public UserDTO getUser(@PathVariable("id") long id) {
         User user = userService.getById(id);
         return mapperUser.toUserDTO(user);
     }
 
-/*    @GetMapping("/admin/{id}")
-    public ResponseEntity<User> getUser (@PathVariable("id") Long id) {
-        User user = userService.getById(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }*/
 
-/*
-    @GetMapping("/admin/{id}")
-    public User getUser (@PathVariable("id") long id) {
-        return userService.getById(id);
-    }
-*/
-
-
-
-    @PostMapping("/admin")
+    @PostMapping()
     public ResponseEntity<?> createUser(@RequestBody User user) {
-            if (userService.loadUserByUsername(user.getUsername()) == null) {
-                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                user.setPassword(passwordEncoder.encode(user.getPassword()));
-                userService.save(user);
-            }
-            return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-
-    @PutMapping("/admin")
-    public void updateUser(@RequestBody User user) {
-/*        User checkUser = userService.loadUserByUsername(user.getUsername());
-        if (checkUser.getId() == user.getId()) {*/
+        if (userService.loadUserByUsername(user.getUsername()) == null) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.save(user);
-        //}
+        }
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+
+    @PutMapping()
+    public void updateUser(@RequestBody User user) {
+        userService.save(user);
 
     }
 
-    @DeleteMapping("/admin/{id}")
-    public ResponseEntity<User>DeleteModal(@PathVariable("id") long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<User> DeleteModal(@PathVariable("id") long id) {
 
         userService.removeById(id);
         return new ResponseEntity<>(HttpStatus.OK);
