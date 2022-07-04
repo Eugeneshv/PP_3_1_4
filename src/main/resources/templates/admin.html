@@ -225,13 +225,15 @@
                                                        name="age" placeholder="Age">
                                             </div>
                                             <div class="form-group was-validated">
-                                                <label for="newUsername">Email</label>
-                                                <input type="email" class="form-control" id="newUsername"
-                                                       name="username" value="username" required>
+                                                <label for="newUsername" class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="newUsername" readonly
+                                                       name="username" onfocus="this.removeAttribute('readonly');"
+                                                       placeholder="name@example.com" required>
                                             </div>
                                             <div class="form-group text-center was-validated">
                                                 <label for="newPassword">Password</label>
-                                                <input type="password" class="form-control is-invalid"
+                                                <input type="password" class="form-control is-invalid" readonly
+                                                       onfocus="this.removeAttribute('readonly')"
                                                        id="newPassword" name="password" placeholder="Password" required>
                                             </div>
                                             <div class="form-group text-center was-validated">
